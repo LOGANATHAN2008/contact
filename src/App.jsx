@@ -21,13 +21,13 @@ function App() {
   const [activeMobileTab, setActiveMobileTab] = useState('chat');
 
   useEffect(() => {
-    if (location.pathname.toLowerCase() === '/album') {
+    if (location.pathname.toLowerCase().startsWith('/album')) {
       setIsPhotosOpen(true);
     }
   }, []);
 
   useEffect(() => {
-    if (location.pathname.toLowerCase() === '/album') {
+    if (location.pathname.toLowerCase().startsWith('/album')) {
       setIsPhotosOpen(true);
     } else {
       setIsPhotosOpen(false);

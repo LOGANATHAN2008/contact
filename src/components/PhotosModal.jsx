@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const featuredPhotos = [
-  "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=500&q=60",
-  "https://loganathanm.in/assets/loganathan-m-og-share.webp",
-  "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=500&q=60",
-  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=500&q=60"
+  { src: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=500&q=60", slug: "setup-1" },
+  { src: "https://loganathanm.in/assets/loganathan-m-og-share.webp", slug: "loganathan-m-og-share.webp" },
+  { src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=500&q=60", slug: "setup-2" },
+  { src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=500&q=60", slug: "setup-3" }
 ];
 
 const memoryPhotos = [
-  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=500&q=60",
-  "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=500&q=60",
-  "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=500&q=60",
-  "/logo.png",
-  "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=500&q=60",
-  "https://loganathanm.in/assets/loganathan-m-og-share.webp"
+  { src: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=500&q=60", slug: "memory-1" },
+  { src: "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=500&q=60", slug: "memory-2" },
+  { src: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=500&q=60", slug: "memory-3" },
+  { src: "/logo.png", slug: "logo.png" },
+  { src: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=500&q=60", slug: "setup-1-dup" },
+  { src: "https://loganathanm.in/assets/loganathan-m-og-share.webp", slug: "loganathan-m-og-share-dup.webp" }
 ];
 
 function PhotosModal({ isOpen, onClose }) {
@@ -24,13 +24,24 @@ function PhotosModal({ isOpen, onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const allPhotos = [...featuredPhotos, ...memoryPhotos];
+
   useEffect(() => {
     if (isOpen) {
-      if (location.pathname.toLowerCase() !== '/album') {
+      const pathParts = location.pathname.split('/');
+      if (pathParts[1]?.toLowerCase() === 'album' && pathParts[2]) {
+        const slug = pathParts[2];
+        const photo = allPhotos.find(p => p.slug === slug);
+        if (photo) {
+          setViewerImg(photo.src);
+        } else {
+          setViewerImg(null);
+        }
+      } else if (location.pathname.toLowerCase() !== '/album') {
         navigate('/Album');
       }
     } else {
-      if (location.pathname.toLowerCase() === '/album') {
+      if (location.pathname.toLowerCase().startsWith('/album')) {
         navigate('/');
       }
     }
@@ -38,10 +49,9 @@ function PhotosModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  const allPhotos = [...featuredPhotos, ...memoryPhotos];
-
-  const handleImageClick = (src) => {
-    setViewerImg(src);
+  const handleImageClick = (photo) => {
+    navigate(`/Album/${photo.slug}`);
+    setViewerImg(photo.src);
   };
 
   return (
@@ -63,8 +73,8 @@ function PhotosModal({ isOpen, onClose }) {
                 <h2>Featured Photos <i className="fa-solid fa-chevron-right"></i></h2>
               </div>
               <div className="ios-featured-grid">
-                {featuredPhotos.map((src, i) => (
-                  <img key={`feat-${i}`} src={src} onClick={() => handleImageClick(src)} alt="" />
+                {featuredPhotos.map((photo, i) => (
+                  <img key={`feat-${i}`} src={photo.src} onClick={() => handleImageClick(photo)} alt="" />
                 ))}
               </div>
             </div>
@@ -74,8 +84,8 @@ function PhotosModal({ isOpen, onClose }) {
                 <h2>Memories <i className="fa-solid fa-chevron-right"></i></h2>
               </div>
               <div className="ios-memories-grid">
-                {memoryPhotos.map((src, i) => (
-                  <img key={`mem-${i}`} src={src} onClick={() => handleImageClick(src)} alt="" />
+                {memoryPhotos.map((photo, i) => (
+                  <img key={`mem-${i}`} src={photo.src} onClick={() => handleImageClick(photo)} alt="" />
                 ))}
               </div>
             </div>
@@ -85,8 +95,8 @@ function PhotosModal({ isOpen, onClose }) {
         {activeTab === 'library' && (
           <div className="ios-library-content">
             <div className="ios-library-grid">
-              {allPhotos.map((src, i) => (
-                <img key={`lib-${i}`} src={src} onClick={() => handleImageClick(src)} alt="" />
+              {allPhotos.map((photo, i) => (
+                <img key={`lib-${i}`} src={photo.src} onClick={() => handleImageClick(photo)} alt="" />
               ))}
             </div>
           </div>
@@ -116,7 +126,13 @@ function PhotosModal({ isOpen, onClose }) {
       {viewerImg && (
         <div className="ios-viewer-modal active">
           <div className="ios-viewer-header">
-            <button onClick={() => setViewerImg(null)} className="ios-btn-text ios-back-btn">
+            <button 
+              onClick={() => {
+                setViewerImg(null);
+                navigate('/Album');
+              }} 
+              className="ios-btn-text ios-back-btn"
+            >
               <i className="fa-solid fa-chevron-left"></i> Recents
             </button>
           </div>
