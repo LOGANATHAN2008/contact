@@ -520,6 +520,7 @@
                 <a href="https://github.com/LOGANATHAN2008"><i class="fa-brands fa-github"></i> GitHub</a>
                 <a href="https://www.linkedin.com/in/loganathanm-in/"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
                 <a href="https://www.instagram.com/loganathanm.in"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                <a href="#" id="open-album-btn"><i class="fa-solid fa-image"></i> Photos</a>
             </div>
         </div>
     </footer>
@@ -528,6 +529,32 @@
     <div id="image-modal" class="image-modal hidden">
         <span class="close-modal" id="close-modal">&times;</span>
         <img class="modal-content" id="modal-img">
+    </div>
+
+    <!-- iOS Style Album Modal -->
+    <div id="ios-album-modal" class="ios-album-modal">
+        <div class="ios-album-header">
+            <button id="close-album-btn" class="ios-btn-text">Cancel</button>
+            <span class="ios-title">Recents</span>
+            <button class="ios-btn-text" style="opacity: 0; pointer-events: none;">Select</button>
+        </div>
+        <div class="ios-album-content">
+            <div class="ios-album-grid" id="ios-album-grid">
+                <!-- Images injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- iOS Photo Viewer (Full Screen) -->
+    <div id="ios-viewer-modal" class="ios-viewer-modal">
+        <div class="ios-viewer-header">
+            <button id="close-viewer-btn" class="ios-btn-text ios-back-btn">
+                <i class="fa-solid fa-chevron-left"></i> Recents
+            </button>
+        </div>
+        <div class="ios-viewer-content">
+            <img id="ios-viewer-img" src="" alt="View">
+        </div>
     </div>
 
     <!-- Firebase SDK (Modular) -->

@@ -717,6 +717,58 @@ END:VCARD`;
     }
 
     // ---------------------------------------------------------
+    // IOS ALBUM & VIEWER
+    // ---------------------------------------------------------
+    const openAlbumBtn = document.getElementById('open-album-btn');
+    const iosAlbumModal = document.getElementById('ios-album-modal');
+    const closeAlbumBtn = document.getElementById('close-album-btn');
+    const iosAlbumGrid = document.getElementById('ios-album-grid');
+
+    const iosViewerModal = document.getElementById('ios-viewer-modal');
+    const closeViewerBtn = document.getElementById('close-viewer-btn');
+    const iosViewerImg = document.getElementById('ios-viewer-img');
+
+    // Sample photos for the album
+    const samplePhotos = [
+        "/logo.png",
+        "https://loganathanm.in/assets/loganathan-m-og-share.webp",
+        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=500&q=60",
+        "/logo.png"
+    ];
+
+    if (openAlbumBtn && iosAlbumModal) {
+        openAlbumBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Populate grid if empty
+            if (iosAlbumGrid.children.length === 0) {
+                samplePhotos.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.addEventListener('click', () => {
+                        iosViewerImg.src = src;
+                        iosViewerModal.classList.add('active');
+                    });
+                    iosAlbumGrid.appendChild(img);
+                });
+            }
+            iosAlbumModal.classList.add('active');
+        });
+
+        closeAlbumBtn.addEventListener('click', () => {
+            iosAlbumModal.classList.remove('active');
+        });
+        
+        closeViewerBtn.addEventListener('click', () => {
+            iosViewerModal.classList.remove('active');
+        });
+    }
+
+    // ---------------------------------------------------------
     // UTILS
     // ---------------------------------------------------------
     function showToast(message, type = 'success') {

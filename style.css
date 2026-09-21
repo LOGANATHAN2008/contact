@@ -349,6 +349,52 @@ footer { border-top: 1px solid var(--border-glass); padding: 2rem 0 3rem; margin
 }
 .image-modal .close-modal:hover { color: var(--primary); }
 
+/* iOS Album Modals */
+.ios-album-modal, .ios-viewer-modal {
+    position: fixed; inset: 0; z-index: 20000;
+    background: var(--bg-main); display: flex; flex-direction: column;
+    transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.ios-album-modal.active, .ios-viewer-modal.active {
+    transform: translateY(0);
+}
+.ios-viewer-modal { background: #000; }
+
+.ios-album-header, .ios-viewer-header {
+    height: 50px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1rem; position: sticky; top: 0; z-index: 10;
+    background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+[data-theme="dark"] .ios-album-header {
+    background: rgba(0, 0, 0, 0.7); border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.ios-viewer-header {
+    background: rgba(0,0,0,0.7); border-bottom: none;
+}
+
+.ios-title { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); }
+.ios-btn-text {
+    background: none; border: none; color: #007aff; font-size: 1.1rem; font-weight: 500; cursor: pointer;
+}
+.ios-viewer-modal .ios-btn-text { color: #fff; }
+
+.ios-album-content { flex: 1; overflow-y: auto; }
+.ios-album-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+}
+@media (min-width: 600px) { .ios-album-grid { grid-template-columns: repeat(4, 1fr); } }
+.ios-album-grid img {
+    width: 100%; aspect-ratio: 1; object-fit: cover; cursor: pointer;
+}
+
+.ios-viewer-content {
+    flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.ios-viewer-content img {
+    max-width: 100%; max-height: 100%; object-fit: contain;
+}
+
 /* Toasts */
 #toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; display: flex; flex-direction: column; gap: 0.75rem; pointer-events: none; }
 .toast { min-width: 280px; padding: 1rem 1.25rem; border-radius: 0.5rem; background: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-glass); color: var(--text-primary); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2); display: flex; align-items: center; gap: 0.75rem; animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; transform: translateX(120%); pointer-events: auto; font-weight: 500; font-size: 0.9rem; }
