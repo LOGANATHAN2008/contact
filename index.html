@@ -440,25 +440,22 @@
                             <div id="summary-datetime">Thu, Sep 21 at 10:00 AM (IST)</div>
                         </div>
 
-                        <form id="booking-form" novalidate>
-                            <!-- Honeypot -->
-                            <input type="text" name="bot-field-book" class="hidden-field" tabindex="-1">
-                            
+                        <form id="booking-form" action="https://formspree.io/f/mwlpopgg" method="POST">
                             <div class="form-group">
                                 <label>Name <span class="required">*</span></label>
-                                <input type="text" id="book-name" required>
+                                <input type="text" id="book-name" name="name" required>
                             </div>
                             <div class="form-group">
                                 <label>Email <span class="required">*</span></label>
-                                <input type="email" id="book-email" required>
+                                <input type="email" id="book-email" name="email" required>
                             </div>
                             <div class="form-group">
                                 <label>Phone / WhatsApp <span class="optional-text">(Optional)</span></label>
-                                <input type="tel" id="book-phone">
+                                <input type="tel" id="book-phone" name="phone">
                             </div>
                             <div class="form-group">
                                 <label>Meeting Platform <span class="required">*</span></label>
-                                <select id="book-platform" required>
+                                <select id="book-platform" name="platform" required>
                                     <option value="Google Meet" selected>Google Meet</option>
                                     <option value="Zoom">Zoom</option>
                                     <option value="Phone call">Phone call</option>
@@ -467,7 +464,7 @@
                             </div>
                             <div class="form-group">
                                 <label>What do you want to discuss? <span class="required">*</span></label>
-                                <textarea id="book-topic" rows="2" required></textarea>
+                                <textarea id="book-topic" name="topic" rows="2" required></textarea>
                             </div>
                             
                             <button type="submit" class="btn btn-primary w-100" id="book-submit">

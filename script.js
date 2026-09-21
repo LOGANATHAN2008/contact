@@ -599,43 +599,51 @@ END:VCARD`;
     }
 
     // Step 4: Submission
-    document.getElementById('booking-form').addEventListener('submit', async (e) => {
+    const bookingForm = document.getElementById('booking-form');
+    bookingForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (document.querySelector('input[name="bot-field-book"]').value !== "") return;
         
         const btn = document.getElementById('book-submit');
         const text = btn.querySelector('.btn-text');
         const spinner = btn.querySelector('.spinner');
         
-        const payload = {
-            name: document.getElementById('book-name').value,
-            email: document.getElementById('book-email').value,
-            phone: document.getElementById('book-phone').value,
-            platform: document.getElementById('book-platform').value,
-            topic: document.getElementById('book-topic').value,
-            type: bookingState.type,
-            duration: bookingState.duration,
-            slotStart: bookingState.slotStart
-        };
-
-        if (!payload.name || !payload.email || !payload.topic) return;
-
         btn.disabled = true;
         text.classList.add('hidden');
         spinner.classList.remove('hidden');
 
+        const data = new FormData(e.target);
+        
+        const topic = data.get('topic');
+        const platform = data.get('platform');
+        
+        // Append extra booking context to the form data for the email
+        data.append("Meeting Type", bookingState.type);
+        data.append("Duration (mins)", bookingState.duration);
+        const dateStr = new Date(bookingState.slotStart).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+        data.append("Requested Time (IST)", dateStr);
+
         try {
-            const res = await fetch('/api/book', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+            const res = await fetch(e.target.action, {
+                method: bookingForm.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
             });
             
-            const data = await res.json();
+            if (!res.ok) {
+                const resData = await res.json();
+                if (Object.hasOwn(resData, 'errors')) {
+                    throw new Error(resData.errors.map(error => error.message).join(", "));
+                } else {
+                    throw new Error('Failed to book via Formspree');
+                }
+            }
             
-            if (!res.ok) throw new Error(data.error || 'Failed to book');
+            // Generate a fake booking ID for UI satisfaction
+            const bookingId = 'BK-' + Math.random().toString(36).substring(2, 8).toUpperCase();
             
-            document.getElementById('conf-id').textContent = data.id || '---';
+            document.getElementById('conf-id').textContent = bookingId;
             document.getElementById('conf-type').textContent = bookingState.type;
             
             const tz = document.getElementById('timezone-select').value;
@@ -647,15 +655,15 @@ END:VCARD`;
                 hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata'
             }).format(new Date(bookingState.slotStart)) + ` (IST)`;
             
-            document.getElementById('conf-platform').textContent = payload.platform;
+            document.getElementById('conf-platform').textContent = platform;
             
             const startStr = new Date(bookingState.slotStart).toISOString().replace(/-|:|\.\d\d\d/g,"");
             const endStr = new Date(bookingState.slotStart + (bookingState.duration*60000)).toISOString().replace(/-|:|\.\d\d\d/g,"");
-            const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Meeting with Loganathan M')}&dates=${startStr}/${endStr}&details=${encodeURIComponent('Topic: ' + payload.topic)}&location=${encodeURIComponent(payload.platform)}`;
+            const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Meeting with Loganathan M')}&dates=${startStr}/${endStr}&details=${encodeURIComponent('Topic: ' + topic)}&location=${encodeURIComponent(platform)}`;
             document.getElementById('add-gcal').href = gcalUrl;
             
             document.getElementById('download-ics').onclick = () => {
-                const icsData = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:${startStr}\nDTEND:${endStr}\nSUMMARY:Meeting with Loganathan M\nDESCRIPTION:${payload.topic}\nLOCATION:${payload.platform}\nEND:VEVENT\nEND:VCALENDAR`;
+                const icsData = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:${startStr}\nDTEND:${endStr}\nSUMMARY:Meeting with Loganathan M\nDESCRIPTION:${topic}\nLOCATION:${platform}\nEND:VEVENT\nEND:VCALENDAR`;
                 const blob = new Blob([icsData], { type: 'text/calendar' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
