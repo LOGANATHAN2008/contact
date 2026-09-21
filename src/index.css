@@ -327,7 +327,7 @@ footer { border-top: 1px solid var(--border-glass); padding: 2rem 0 max(6rem, en
     box-shadow: 0 12px 30px rgba(59, 130, 246, 0.3);
 }
 .footer-content p { color: var(--text-secondary); font-size: 0.875rem; }
-.footer-links { display: flex; gap: 1.5rem; }
+.footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
 .footer-links a { display: flex; align-items: center; gap: 0.4rem; color: var(--text-secondary); font-size: 0.875rem; font-weight: 500; }
 .footer-links a:hover { color: var(--primary); }
 
