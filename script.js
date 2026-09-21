@@ -764,8 +764,7 @@ END:VCARD`;
         const iosLibraryGrid = document.getElementById('ios-library-grid');
         const largeTitle = document.querySelector('.ios-18-large-title');
 
-        openAlbumBtn.addEventListener('click', (e) => {
-            e.preventDefault();
+        function openIosAlbum() {
             // Populate grids if empty
             if (iosFeaturedGrid && iosFeaturedGrid.children.length === 0) {
                 featuredPhotos.forEach(src => iosFeaturedGrid.appendChild(createImgElement(src)));
@@ -778,6 +777,16 @@ END:VCARD`;
                 allPhotos.forEach(src => iosLibraryGrid.appendChild(createImgElement(src)));
             }
             iosAlbumModal.classList.add('active');
+        }
+
+        function closeIosAlbum() {
+            iosAlbumModal.classList.remove('active');
+        }
+
+        openAlbumBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openIosAlbum();
+            history.pushState({ modal: 'album' }, '', '/Album');
         });
 
         if (navLibrary && navCollections) {
@@ -799,8 +808,26 @@ END:VCARD`;
 
         if(closeAlbumBtn) {
             closeAlbumBtn.addEventListener('click', () => {
-                iosAlbumModal.classList.remove('active');
+                closeIosAlbum();
+                history.pushState(null, '', '/');
             });
+        }
+        
+        // Handle browser back button
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.modal === 'album') {
+                openIosAlbum();
+            } else if (window.location.pathname.toLowerCase() === '/album') {
+                openIosAlbum();
+            } else {
+                closeIosAlbum();
+            }
+        });
+
+        // Auto-open on load if URL is /Album
+        if (window.location.pathname.toLowerCase() === '/album') {
+            openIosAlbum();
+            history.replaceState({ modal: 'album' }, '', '/Album');
         }
         
         if(closeViewerBtn) {
