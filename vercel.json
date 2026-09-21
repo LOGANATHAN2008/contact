@@ -2,7 +2,9 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/Album/(.*)", "destination": "/" },
     { "source": "/Album", "destination": "/" },
+    { "source": "/album/(.*)", "destination": "/" },
     { "source": "/album", "destination": "/" }
   ],
   "routes": [
