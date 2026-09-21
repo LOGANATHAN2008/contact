@@ -54,18 +54,21 @@ function LocationFaq() {
         {faqs.map((faq, index) => (
           <div className="faq-item" key={index}>
             <button 
-              className="faq-question" 
+              className="faq-btn" 
               onClick={() => toggleFaq(index)}
               aria-expanded={openFaqIndex === index}
             >
-              {faq.q}
-              <i className={`fa-solid fa-chevron-down ${openFaqIndex === index ? 'rotated' : ''}`}></i>
+              <span>{faq.q}</span>
+              <i className="fa-solid fa-chevron-down"></i>
             </button>
-            {openFaqIndex === index && (
-              <div className="faq-answer">
+            <div 
+              className="faq-content" 
+              style={{ maxHeight: openFaqIndex === index ? '500px' : '0' }}
+            >
+              <div className="faq-content-inner">
                 <p>{faq.a}</p>
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
