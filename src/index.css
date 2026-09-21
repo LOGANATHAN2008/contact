@@ -478,6 +478,8 @@ footer { border-top: 1px solid var(--border-glass); padding: 2rem 0 3rem; margin
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     }
     
+    .hide-mobile { display: none !important; }
+    
     /* iOS Segmented Control Style Tabs */
     .mobile-tabs { 
         display: flex; 
