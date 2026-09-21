@@ -340,7 +340,49 @@ END:VCARD`;
         document.getElementById('fallback-form-container').classList.add('hidden');
     });
 
-    // Removed JS submit handler for direct-contact-form to allow native Formspree submission
+    const contactForm = document.getElementById('direct-contact-form');
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const btn = document.getElementById('fb-submit');
+        const text = btn.querySelector('.btn-text');
+        const spinner = btn.querySelector('.spinner');
+        
+        btn.disabled = true;
+        text.classList.add('hidden');
+        spinner.classList.remove('hidden');
+
+        const data = new FormData(e.target);
+
+        try {
+            const response = await fetch(e.target.action, {
+                method: contactForm.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                showToast('Message sent to Loga!', 'success');
+                document.getElementById('fallback-form-container').classList.add('hidden');
+                contactForm.reset();
+            } else {
+                const resData = await response.json();
+                if (Object.hasOwn(resData, 'errors')) {
+                    throw new Error(resData.errors.map(error => error.message).join(", "));
+                } else {
+                    throw new Error('Oops! There was a problem submitting your form');
+                }
+            }
+        } catch (error) {
+            showToast(error.message || 'Failed to send message.', 'error');
+        } finally {
+            btn.disabled = false;
+            text.classList.remove('hidden');
+            spinner.classList.add('hidden');
+        }
+    });
 
     // ---------------------------------------------------------
     // FEATURE 2: SCHEDULER
