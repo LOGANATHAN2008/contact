@@ -314,7 +314,7 @@ a:hover { color: var(--primary-hover); text-decoration: underline; }
 @keyframes scaleIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
 
 /* Footer */
-footer { border-top: 1px solid var(--border-glass); padding: 2rem 0 3rem; margin-top: 2rem; background: var(--bg-glass); backdrop-filter: blur(16px); }
+footer { border-top: 1px solid var(--border-glass); padding: 2rem 0 max(6rem, env(safe-area-inset-bottom)); margin-top: 2rem; background: var(--bg-glass); backdrop-filter: blur(16px); }
 .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
 .footer-brand { width: 100%; display: flex; justify-content: center; margin-bottom: 1.5rem; }
 .footer-brand .footer-logo-img {
