@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import QuickLinks from './components/QuickLinks';
+import LocationFaq from './components/LocationFaq';
+import Chatbot from './components/Chatbot';
+import Scheduler from './components/Scheduler';
 import Footer from './components/Footer';
 import PhotosModal from './components/PhotosModal';
 import './index.css';
@@ -15,15 +18,14 @@ function App() {
   const navigate = useNavigate();
   
   const [isPhotosOpen, setIsPhotosOpen] = useState(false);
+  const [activeMobileTab, setActiveMobileTab] = useState('chat');
 
-  // Auto-open album if URL is /Album on load
   useEffect(() => {
     if (location.pathname.toLowerCase() === '/album') {
       setIsPhotosOpen(true);
     }
   }, []);
 
-  // Listen to browser back button (popstate) handled implicitly by React Router Location changes
   useEffect(() => {
     if (location.pathname.toLowerCase() === '/album') {
       setIsPhotosOpen(true);
@@ -53,10 +55,26 @@ function App() {
         </header>
         
         <QuickLinks />
+        <LocationFaq />
 
-        {/* We will implement Chatbot in subsequent steps */}
-        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-          <p><em>React Conversion In Progress... Chatbot will be loaded here.</em></p>
+        <div className="mobile-tabs glass-card">
+          <button 
+            className={`tab-btn ${activeMobileTab === 'chat' ? 'active' : ''}`} 
+            onClick={() => setActiveMobileTab('chat')}
+          >
+            <i className="fa-solid fa-robot"></i> Ask AI
+          </button>
+          <button 
+            className={`tab-btn ${activeMobileTab === 'book' ? 'active' : ''}`} 
+            onClick={() => setActiveMobileTab('book')}
+          >
+            <i className="fa-regular fa-calendar-check"></i> Book a Call
+          </button>
+        </div>
+
+        <div className="layout-grid">
+          <Chatbot isActive={activeMobileTab === 'chat'} />
+          <Scheduler isActive={activeMobileTab === 'book'} />
         </div>
       </main>
 
