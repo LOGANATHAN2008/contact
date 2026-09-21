@@ -360,33 +360,57 @@ footer { border-top: 1px solid var(--border-glass); padding: 2rem 0 3rem; margin
 }
 .ios-viewer-modal { background: #000; }
 
-.ios-album-header, .ios-viewer-header {
-    height: 50px; display: flex; align-items: center; justify-content: space-between;
-    padding: 0 1rem; position: sticky; top: 0; z-index: 10;
-    background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+.ios-18-top-bar {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 1rem 1.5rem 0.5rem; position: sticky; top: 0; z-index: 10;
+    background: var(--bg-main);
 }
-[data-theme="dark"] .ios-album-header {
-    background: rgba(0, 0, 0, 0.7); border-bottom: 1px solid rgba(255,255,255,0.1);
+.ios-18-large-title { font-size: 2.2rem; font-weight: 700; margin: 0; letter-spacing: -0.5px; }
+.ios-18-top-actions { display: flex; align-items: center; gap: 1rem; }
+.ios-icon-btn, .ios-close-btn { 
+    background: var(--bg-glass); border: none; border-radius: 50%; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; color: var(--text-primary);
 }
-.ios-viewer-header {
-    background: rgba(0,0,0,0.7); border-bottom: none;
-}
+.ios-profile-icon img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
 
-.ios-title { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); }
-.ios-btn-text {
-    background: none; border: none; color: #007aff; font-size: 1.1rem; font-weight: 500; cursor: pointer;
-}
-.ios-viewer-modal .ios-btn-text { color: #fff; }
+.ios-album-content { flex: 1; overflow-y: auto; padding-bottom: 100px; }
+.ios-section { padding: 1rem 1.5rem; }
+.ios-section-header h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
+.ios-section-header h2 i { font-size: 0.9rem; color: var(--text-secondary); }
 
-.ios-album-content { flex: 1; overflow-y: auto; }
-.ios-album-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+.ios-featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.ios-featured-grid img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 16px; cursor: pointer; }
+
+.ios-memories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.ios-memories-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; cursor: pointer; }
+
+.ios-18-floating-nav-wrapper {
+    position: absolute; bottom: 30px; left: 0; width: 100%; display: flex; justify-content: center; pointer-events: none; z-index: 20;
 }
-@media (min-width: 600px) { .ios-album-grid { grid-template-columns: repeat(4, 1fr); } }
-.ios-album-grid img {
-    width: 100%; aspect-ratio: 1; object-fit: cover; cursor: pointer;
+.ios-18-floating-nav {
+    pointer-events: auto; display: flex; align-items: center; gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(25px) saturate(200%); -webkit-backdrop-filter: blur(25px) saturate(200%);
+    padding: 0.5rem; border-radius: 40px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border: 1px solid rgba(255,255,255,0.4);
 }
+[data-theme="dark"] .ios-18-floating-nav {
+    background: rgba(40, 40, 40, 0.65); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.nav-pill { display: flex; background: rgba(0,0,0,0.05); border-radius: 30px; padding: 4px; }
+[data-theme="dark"] .nav-pill { background: rgba(0,0,0,0.3); }
+.nav-item { 
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    padding: 0.5rem 1.2rem; border-radius: 24px; cursor: pointer; color: var(--text-secondary); transition: all 0.2s;
+}
+.nav-item i { font-size: 1.2rem; }
+.nav-item span { font-size: 0.7rem; font-weight: 500; }
+.nav-item.active { background: rgba(255,255,255,0.9); color: var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+[data-theme="dark"] .nav-item.active { background: rgba(80,80,80,0.9); color: #fff; }
+
+.nav-search { 
+    width: 48px; height: 48px; border-radius: 50%; background: rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary);
+}
+[data-theme="dark"] .nav-search { background: rgba(0,0,0,0.3); }
 
 .ios-viewer-content {
     flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden;

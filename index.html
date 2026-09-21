@@ -531,16 +531,47 @@
         <img class="modal-content" id="modal-img">
     </div>
 
-    <!-- iOS Style Album Modal -->
+    <!-- iOS 18 Style Album Modal -->
     <div id="ios-album-modal" class="ios-album-modal">
-        <div class="ios-album-header">
-            <button id="close-album-btn" class="ios-btn-text">Cancel</button>
-            <span class="ios-title">Recents</span>
-            <button class="ios-btn-text" style="opacity: 0; pointer-events: none;">Select</button>
+        <div class="ios-18-top-bar">
+            <h1 class="ios-18-large-title">Collections</h1>
+            <div class="ios-18-top-actions">
+                <button class="ios-icon-btn"><i class="fa-solid fa-ellipsis"></i></button>
+                <div class="ios-profile-icon"><img src="/logo.png" alt="Profile"></div>
+                <button id="close-album-btn" class="ios-close-btn">&times;</button>
+            </div>
         </div>
+        
         <div class="ios-album-content">
-            <div class="ios-album-grid" id="ios-album-grid">
-                <!-- Images injected via JS -->
+            <!-- Section: Featured -->
+            <div class="ios-section">
+                <div class="ios-section-header">
+                    <h2>Featured Photos <i class="fa-solid fa-chevron-right"></i></h2>
+                </div>
+                <div class="ios-featured-grid" id="ios-featured-grid">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <!-- Section: Memories -->
+            <div class="ios-section">
+                <div class="ios-section-header">
+                    <h2>Memories <i class="fa-solid fa-chevron-right"></i></h2>
+                </div>
+                <div class="ios-memories-grid" id="ios-memories-grid">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Bottom Nav -->
+        <div class="ios-18-floating-nav-wrapper">
+            <div class="ios-18-floating-nav">
+                <div class="nav-pill">
+                    <div class="nav-item"><i class="fa-regular fa-image"></i><span>Library</span></div>
+                    <div class="nav-item active"><i class="fa-solid fa-layer-group"></i><span>Collections</span></div>
+                </div>
+                <div class="nav-search"><i class="fa-solid fa-magnifying-glass"></i></div>
             </div>
         </div>
     </div>
