@@ -512,7 +512,7 @@
     <footer>
         <div class="container footer-content">
             <div class="footer-brand">
-                <img src="/logo.png" alt="Loganathan M" class="footer-logo-img">
+                <img src="/logo.png" alt="Loganathan M" class="footer-logo-img" id="footer-logo-img" style="cursor: pointer;">
             </div>
             <p>Made with love in Bengaluru | &copy; 2026 Loganathan M. All Rights Reserved.</p>
             <div class="footer-links">
@@ -523,6 +523,12 @@
             </div>
         </div>
     </footer>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="image-modal hidden">
+        <span class="close-modal" id="close-modal">&times;</span>
+        <img class="modal-content" id="modal-img">
+    </div>
 
     <!-- Firebase SDK (Modular) -->
     <script type="module" src="firebase-config.js"></script>

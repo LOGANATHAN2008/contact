@@ -692,6 +692,31 @@ END:VCARD`;
     });
 
     // ---------------------------------------------------------
+    // IMAGE MODAL
+    // ---------------------------------------------------------
+    const imageModal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const footerLogoImg = document.getElementById('footer-logo-img');
+    const closeModal = document.getElementById('close-modal');
+
+    if (footerLogoImg && imageModal && modalImg && closeModal) {
+        footerLogoImg.addEventListener('click', () => {
+            modalImg.src = footerLogoImg.src;
+            imageModal.classList.remove('hidden');
+        });
+
+        closeModal.addEventListener('click', () => {
+            imageModal.classList.add('hidden');
+        });
+
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                imageModal.classList.add('hidden');
+            }
+        });
+    }
+
+    // ---------------------------------------------------------
     // UTILS
     // ---------------------------------------------------------
     function showToast(message, type = 'success') {
