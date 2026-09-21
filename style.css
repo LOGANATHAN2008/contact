@@ -376,7 +376,13 @@ footer { border-top: 1px solid var(--border-glass); padding: 2rem 0 3rem; margin
 }
 .ios-profile-icon img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
 
-.ios-album-content { flex: 1; overflow-y: auto; padding-bottom: 100px; }
+.ios-album-content, .ios-library-content { flex: 1; overflow-y: auto; padding-bottom: 100px; }
+.ios-album-content.hidden, .ios-library-content.hidden { display: none; }
+
+.ios-library-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; padding: 2px; }
+@media (min-width: 600px) { .ios-library-grid { grid-template-columns: repeat(4, 1fr); } }
+.ios-library-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; cursor: pointer; }
+
 .ios-section { padding: 1rem 1.5rem; }
 .ios-section-header h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
 .ios-section-header h2 i { font-size: 0.9rem; color: var(--text-secondary); }

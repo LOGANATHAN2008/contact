@@ -538,6 +538,7 @@
             <div class="ios-18-top-actions">
                 <button class="ios-icon-btn"><i class="fa-solid fa-ellipsis"></i></button>
                 <div class="ios-profile-icon"><img src="/logo.png" alt="Profile"></div>
+                <button id="close-album-btn" class="ios-close-btn">&times;</button>
             </div>
         </div>
         
@@ -563,12 +564,18 @@
             </div>
         </div>
 
+        <div class="ios-library-content hidden" id="ios-library-content">
+            <div class="ios-library-grid" id="ios-library-grid">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
         <!-- Floating Bottom Nav -->
         <div class="ios-18-floating-nav-wrapper">
             <div class="ios-18-floating-nav">
                 <div class="nav-pill">
-                    <div class="nav-item"><i class="fa-regular fa-image"></i><span>Library</span></div>
-                    <div class="nav-item active"><i class="fa-solid fa-layer-group"></i><span>Collections</span></div>
+                    <div class="nav-item" id="nav-library"><i class="fa-regular fa-image"></i><span>Library</span></div>
+                    <div class="nav-item active" id="nav-collections"><i class="fa-solid fa-layer-group"></i><span>Collections</span></div>
                 </div>
                 <div class="nav-search"><i class="fa-solid fa-magnifying-glass"></i></div>
             </div>

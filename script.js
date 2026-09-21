@@ -757,6 +757,13 @@ END:VCARD`;
     }
 
     if (openAlbumBtn && iosAlbumModal) {
+        const navLibrary = document.getElementById('nav-library');
+        const navCollections = document.getElementById('nav-collections');
+        const iosLibraryContent = document.getElementById('ios-library-content');
+        const iosAlbumContent = document.querySelector('.ios-album-content');
+        const iosLibraryGrid = document.getElementById('ios-library-grid');
+        const largeTitle = document.querySelector('.ios-18-large-title');
+
         openAlbumBtn.addEventListener('click', (e) => {
             e.preventDefault();
             // Populate grids if empty
@@ -766,18 +773,35 @@ END:VCARD`;
             if (iosMemoriesGrid && iosMemoriesGrid.children.length === 0) {
                 memoryPhotos.forEach(src => iosMemoriesGrid.appendChild(createImgElement(src)));
             }
+            if (iosLibraryGrid && iosLibraryGrid.children.length === 0) {
+                const allPhotos = [...featuredPhotos, ...memoryPhotos];
+                allPhotos.forEach(src => iosLibraryGrid.appendChild(createImgElement(src)));
+            }
             iosAlbumModal.classList.add('active');
         });
 
-        // Swipe down to close for iOS Album Modal
-        let startY = 0;
-        iosAlbumModal.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, {passive: true});
-        iosAlbumModal.addEventListener('touchend', e => {
-            const endY = e.changedTouches[0].clientY;
-            if (endY - startY > 100) { // Swipe down threshold
+        if (navLibrary && navCollections) {
+            navLibrary.addEventListener('click', () => {
+                navCollections.classList.remove('active');
+                navLibrary.classList.add('active');
+                iosAlbumContent.classList.add('hidden');
+                iosLibraryContent.classList.remove('hidden');
+                if (largeTitle) largeTitle.textContent = "Library";
+            });
+            navCollections.addEventListener('click', () => {
+                navLibrary.classList.remove('active');
+                navCollections.classList.add('active');
+                iosLibraryContent.classList.add('hidden');
+                iosAlbumContent.classList.remove('hidden');
+                if (largeTitle) largeTitle.textContent = "Collections";
+            });
+        }
+
+        if(closeAlbumBtn) {
+            closeAlbumBtn.addEventListener('click', () => {
                 iosAlbumModal.classList.remove('active');
-            }
-        }, {passive: true});
+            });
+        }
         
         if(closeViewerBtn) {
             closeViewerBtn.addEventListener('click', () => {
