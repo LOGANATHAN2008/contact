@@ -340,56 +340,7 @@ END:VCARD`;
         document.getElementById('fallback-form-container').classList.add('hidden');
     });
 
-    document.getElementById('direct-contact-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (document.querySelector('input[name="bot-field"]').value !== "") return; // Honeypot
-        
-        const now = Date.now();
-        if (now - lastFallbackTime < 30000) {
-            showToast('Please wait 30 seconds before sending another message.', 'error');
-            return;
-        }
-
-        const btn = document.getElementById('fb-submit');
-        const text = btn.querySelector('.btn-text');
-        const spinner = btn.querySelector('.spinner');
-        
-        const name = document.getElementById('fb-name').value;
-        const email = document.getElementById('fb-email').value;
-        const message = document.getElementById('fb-message').value;
-        
-        if (!name || !email || !message) return;
-
-        btn.disabled = true;
-        text.classList.add('hidden');
-        spinner.classList.remove('hidden');
-
-        try {
-            const response = await fetch('https://formspree.io/f/mwlpopgg', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name, email, message })
-            });
-
-            if (response.ok) {
-                showToast('Message sent to Loga!', 'success');
-                lastFallbackTime = Date.now();
-                document.getElementById('fallback-form-container').classList.add('hidden');
-                document.getElementById('direct-contact-form').reset();
-            } else {
-                throw new Error('Failed to send via Formspree');
-            }
-        } catch (err) {
-            showToast('Failed to send message.', 'error');
-        } finally {
-            btn.disabled = false;
-            text.classList.remove('hidden');
-            spinner.classList.add('hidden');
-        }
-    });
+    // Removed JS submit handler for direct-contact-form to allow native Formspree submission
 
     // ---------------------------------------------------------
     // FEATURE 2: SCHEDULER
