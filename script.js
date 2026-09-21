@@ -769,11 +769,15 @@ END:VCARD`;
             iosAlbumModal.classList.add('active');
         });
 
-        if(closeAlbumBtn) {
-            closeAlbumBtn.addEventListener('click', () => {
+        // Swipe down to close for iOS Album Modal
+        let startY = 0;
+        iosAlbumModal.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, {passive: true});
+        iosAlbumModal.addEventListener('touchend', e => {
+            const endY = e.changedTouches[0].clientY;
+            if (endY - startY > 100) { // Swipe down threshold
                 iosAlbumModal.classList.remove('active');
-            });
-        }
+            }
+        }, {passive: true});
         
         if(closeViewerBtn) {
             closeViewerBtn.addEventListener('click', () => {
