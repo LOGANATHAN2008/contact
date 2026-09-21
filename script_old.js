@@ -835,58 +835,6 @@ END:VCARD`;
                 iosViewerModal.classList.remove('active');
             });
         }
-
-        // --- iOS Swipe to Dismiss Gesture ---
-        function setupSwipeToDismiss(modalElement, scrollContentElement, onClose) {
-            let startY = 0;
-            let currentY = 0;
-            let isDragging = false;
-
-            modalElement.addEventListener('touchstart', (e) => {
-                // Only allow drag if scroll is at top
-                if (scrollContentElement && scrollContentElement.scrollTop > 0) return;
-                
-                startY = e.touches[0].clientY;
-                isDragging = true;
-                modalElement.style.transition = 'none';
-            }, { passive: true });
-
-            modalElement.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                
-                currentY = e.touches[0].clientY;
-                const deltaY = currentY - startY;
-                
-                if (deltaY > 0) {
-                    if(e.cancelable) e.preventDefault(); // Prevent scroll while dragging modal
-                    modalElement.style.transform = `translateY(${deltaY}px)`;
-                }
-            }, { passive: false });
-
-            modalElement.addEventListener('touchend', () => {
-                if (!isDragging) return;
-                isDragging = false;
-                
-                modalElement.style.transition = 'transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), visibility 0.4s';
-                
-                const deltaY = currentY - startY;
-                if (deltaY > 150) {
-                    onClose();
-                    setTimeout(() => { modalElement.style.transform = ''; }, 400);
-                } else {
-                    modalElement.style.transform = '';
-                }
-            });
-        }
-
-        setupSwipeToDismiss(iosAlbumModal, iosAlbumContent, () => {
-            closeIosAlbum();
-            history.pushState(null, '', '/');
-        });
-
-        setupSwipeToDismiss(iosViewerModal, null, () => {
-            iosViewerModal.classList.remove('active');
-        });
     }
 
     // ---------------------------------------------------------
