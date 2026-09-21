@@ -365,13 +365,23 @@ END:VCARD`;
         spinner.classList.remove('hidden');
 
         try {
-            await addDoc(messagesCollection, {
-                name, email, message, timestamp: new Date()
+            const response = await fetch('https://formspree.io/f/mwlpopgg', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, message })
             });
-            showToast('Message sent to Loga!', 'success');
-            lastFallbackTime = Date.now();
-            document.getElementById('fallback-form-container').classList.add('hidden');
-            document.getElementById('direct-contact-form').reset();
+
+            if (response.ok) {
+                showToast('Message sent to Loga!', 'success');
+                lastFallbackTime = Date.now();
+                document.getElementById('fallback-form-container').classList.add('hidden');
+                document.getElementById('direct-contact-form').reset();
+            } else {
+                throw new Error('Failed to send via Formspree');
+            }
         } catch (err) {
             showToast('Failed to send message.', 'error');
         } finally {
