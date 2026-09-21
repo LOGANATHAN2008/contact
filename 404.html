@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | Loganathan M</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error-container {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .error-code {
+            font-size: 6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        .error-message {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    </script>
+    <main class="container error-container slide-up">
+        <div class="error-code">404</div>
+        <div class="error-message">Oops! The page you're looking for doesn't exist.</div>
+        <a href="index.html" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.125rem;">Go to Contact Page</a>
+    </main>
+</body>
+</html>
